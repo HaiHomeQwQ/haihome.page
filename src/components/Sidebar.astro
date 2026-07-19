@@ -1,0 +1,86 @@
+---
+// Sidebar.astro
+---
+
+<aside class="sidebar">
+  <div class="avatar">
+    <img src="/avatar.jpg" alt="Avatar" />
+  </div>
+  <h1 class="title">HaiHome的角落</h1>
+  <nav class="nav">
+    <ul>
+      <li><a href="#">Button1 <span class="arrow">→</span></a></li>
+      <li><a href="#">Button2 <span class="arrow">→</span></a></li>
+      <li><a href="#">Button3 <span class="arrow">→</span></a></li>
+      <li><a href="#">Button4 <span class="arrow">→</span></a></li>
+    </ul>
+  </nav>
+</aside>
+
+<style>
+  .sidebar {
+    width: 240px;
+    margin: 20px;
+    padding: 24px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    height: calc(100vh - 40px);
+    position: sticky; /* 固定在视口 */
+    top: 20px;        /* 顶部边距 */
+  }
+
+  .avatar {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 24px;
+    flex-shrink: 0; /* 确保不被挤压 */
+  }
+
+  .avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block; /* 移除底部间隙 */
+  }
+
+  .title {
+    font-size: 1.25rem;
+    text-align: center;
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+
+  .nav ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .nav a {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    color: var(--text-primary);
+    text-decoration: none;
+    border-radius: var(--radius);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav a:hover {
+    background: var(--bg-page);
+    transform: translateX(4px);
+  }
+
+  .arrow {
+    font-weight: bold;
+    color: var(--text-secondary);
+  }
+</style>
