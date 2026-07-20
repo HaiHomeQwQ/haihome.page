@@ -1,9 +1,10 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import AboutCard from '../components/AboutCard.astro';
+const { frontmatter } = Astro.props;
 ---
 
-<BaseLayout title="关于我 - HaiHome">
+<BaseLayout title={frontmatter.title}>
   <AboutCard>
     <slot />
   </AboutCard>
