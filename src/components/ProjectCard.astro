@@ -5,7 +5,7 @@
 <div class="project-card">
   <h2>项目</h2>
   <ul class="highlight-list">
-    <li><span>☆</span> Abyssal Puzzle 项目组成员</li>
+    <li><span>☆</span> <a href="https://github.com/abyssal-puzzle-team" target="_blank">Abyssal Puzzle</a> 项目组成员</li>
     <li><span>☆</span> 学生休闲开发者</li>
   </ul>
   
@@ -54,7 +54,7 @@
     min-height: 550px;
     box-sizing: border-box;
     width: 100%;
-    max-width: calc(100vw - 56px);
+    max-width: 100%;
   }
 
   h2 { font-size: 1.5rem; color: var(--text-primary); margin: 0; }
@@ -70,7 +70,15 @@
   }
   
   .highlight-list li { display: flex; align-items: center; gap: 8px; }
-  .highlight-list span { color: #facc15; }
+  .highlight-list li span { color: #facc15; }
+  .highlight-list a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .highlight-list a:hover {
+    color: var(--text-primary);
+  }
 
   .project-items {
     list-style: none;

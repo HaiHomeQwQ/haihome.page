@@ -2,12 +2,24 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import TopCard from '../components/TopCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
+import WikiCard from '../components/WikiCard.astro';
+import MinecraftCard from '../components/MinecraftCard.astro';
+
+const wikiItems = [
+  { name: 'EaseCation Wiki', count: '280+ 次编辑', iconUrl: '/easecation.png', url: 'https://wiki.easecation.net/User:HaiHome', highlight: true },
+  { name: 'BrokenLand SMP Wiki', count: '270+ 次编辑', iconUrl: '/brokenland.png', url: 'https://wiki.brokenland.top/wiki/User:HaiHome', highlight: true },
+  { name: '中文维基百科', count: '120+ 次编辑', iconUrl: '/wikipedia.png', url: 'https://zh.wikipedia.org/wiki/User:HaiHome' },
+  { name: '中文 Minecraft Wiki', count: '50+ 次编辑', iconUrl: '/minecraftwiki.png', url: 'https://zh.minecraft.wiki/w/User:HaiHome' },
+];
 ---
 
 <BaseLayout title="HaiHome的角落">
   <TopCard />
   <div class="content-grid">
-    <div class="blank-card"></div>
+    <div class="left-column">
+      <WikiCard items={wikiItems} />
+      <MinecraftCard />
+    </div>
     <ProjectCard />
   </div>
 </BaseLayout>
@@ -15,22 +27,19 @@ import ProjectCard from '../components/ProjectCard.astro';
 <style>
   .content-grid {
     display: grid;
-    grid-template-columns: 2fr 1fr; /* 右侧占内容区的 1/3 */
+    grid-template-columns: 1fr 1fr;
     gap: 20px;
   }
-  .blank-card {
-    background: var(--bg-card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    min-height: 550px; /* 匹配 ProjectCard 新高度 */
+  .left-column {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 32px;
+    height: 550px;
   }
   @media (max-width: 768px) {
     .content-grid {
       grid-template-columns: 1fr;
       gap: 16px;
-    }
-    .blank-card {
-      display: none;
     }
   }
 </style>

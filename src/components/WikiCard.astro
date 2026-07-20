@@ -1,0 +1,126 @@
+---
+// WikiCard.astro
+export interface WikiItem {
+  name: string;
+  count: string;
+  iconUrl: string;
+  url: string;
+  highlight?: boolean;
+}
+
+interface Props {
+  items: WikiItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="wiki-card">
+  <div class="header">
+    <h2>Wiki</h2>
+    <span class="badge">管理员</span>
+  </div>
+  <ul class="wiki-list">
+    {items.map(item => (
+      <li class="item">
+        <a href={item.url} target="_blank">
+          <img src={item.iconUrl} alt={item.name} />
+          <span class={`wiki-name ${item.highlight ? 'highlight-text' : ''}`}>{item.name}</span>
+          <span class="edit-count">{item.count}</span>
+          <span class="arrow">→</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</div>
+
+<style>
+  .wiki-card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    box-sizing: border-box;
+    width: 100%;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  h2 { font-size: 1.5rem; color: var(--text-primary); margin: 0; }
+  
+  .badge { 
+    border: 1px solid #facc15; 
+    padding: 2px 8px; 
+    border-radius: var(--radius); 
+    font-size: 0.8rem;
+    color: #facc15;
+  }
+
+  .wiki-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .item {
+    height: 48px;
+    background: var(--bg-page);
+    border-radius: calc(var(--radius) / 2);
+    display: flex;
+    align-items: center;
+  }
+
+  .item a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .item a:hover {
+    background: var(--bg-card);
+    transform: translateX(4px);
+  }
+
+  .item img {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+  
+  .highlight-text {
+    color: #facc15; /* 与 ProjectCard 的星星颜色一致 */
+  }
+
+  .wiki-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .edit-count {
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    opacity: 0.7;
+  }
+
+  .arrow {
+    font-weight: bold;
+    color: var(--text-secondary);
+  }
+</style>
