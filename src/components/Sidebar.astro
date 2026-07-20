@@ -1,23 +1,87 @@
 ---
-// Sidebar.astro
+
 ---
 
-<aside class="sidebar">
+<button class="hamburger" id="hamburger" aria-label="菜单">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</button>
+
+<aside class="sidebar" id="sidebar">
   <div class="avatar">
     <img src="/avatar.jpg" alt="Avatar" />
   </div>
-  <h1 class="title">HaiHome的角落</h1>
+  <div class="title-wrapper">
+    <h1 class="title">HaiHome的角落</h1>
+    <span class="beta">BETA</span>
+  </div>
   <nav class="nav">
     <ul>
-      <li><a href="#">Button1 <span class="arrow">→</span></a></li>
-      <li><a href="#">Button2 <span class="arrow">→</span></a></li>
-      <li><a href="#">Button3 <span class="arrow">→</span></a></li>
-      <li><a href="#">Button4 <span class="arrow">→</span></a></li>
+      <li><a href="#">主页 <span class="arrow">→</span></a></li>
+      <li><a href="#">关于我 <span class="arrow">→</span></a></li>
+      <li><a href="#">博客 <span class="arrow">→</span></a></li>
+      <li><a href="#">杂物间 <span class="arrow">→</span></a></li>
     </ul>
   </nav>
 </aside>
 
+<div class="overlay" id="overlay"></div>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const sidebar = document.getElementById('sidebar');
+  const overlay = document.getElementById('overlay');
+
+  function toggleMenu() {
+    sidebar.classList.toggle('open');
+    overlay.classList.toggle('visible');
+    hamburger.classList.toggle('active');
+    document.body.classList.toggle('no-scroll');
+  }
+
+  hamburger.addEventListener('click', toggleMenu);
+  overlay.addEventListener('click', toggleMenu);
+</script>
+
 <style>
+  .hamburger {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1000;
+    background: var(--bg-card);
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+    box-shadow: var(--shadow);
+  }
+
+  .hamburger .bar {
+    display: block;
+    width: 22px;
+    height: 2px;
+    background: var(--text-primary);
+    border-radius: 2px;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .hamburger.active .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .hamburger.active .bar:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger.active .bar:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+  }
+
   .sidebar {
     width: 240px;
     margin: 20px;
@@ -29,8 +93,8 @@
     flex-direction: column;
     gap: 24px;
     height: calc(100vh - 40px);
-    position: sticky; /* 固定在视口 */
-    top: 20px;        /* 顶部边距 */
+    position: sticky;
+    top: 20px;
   }
 
   .avatar {
@@ -39,14 +103,20 @@
     margin: 0 auto;
     overflow: hidden;
     border-radius: 24px;
-    flex-shrink: 0; /* 确保不被挤压 */
+    flex-shrink: 0;
   }
 
   .avatar img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block; /* 移除底部间隙 */
+    display: block;
+  }
+
+  .title-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
   }
 
   .title {
@@ -54,6 +124,19 @@
     text-align: center;
     color: var(--text-primary);
     font-weight: 600;
+  }
+
+  .beta {
+    position: absolute;
+    top: -8px;
+    right: -10px;
+    font-size: 0.6rem;
+    padding: 1px 5px;
+    background: var(--text-secondary);
+    color: var(--bg-card);
+    border-radius: 4px;
+    font-weight: 500;
+    line-height: 1;
   }
 
   .nav ul {
@@ -82,5 +165,43 @@
   .arrow {
     font-weight: bold;
     color: var(--text-secondary);
+  }
+
+  .overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+
+  .overlay.visible {
+    display: block;
+  }
+
+  @media (max-width: 768px) {
+    .hamburger {
+      display: flex;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 999;
+      height: 100vh;
+      margin: 0;
+      border-radius: 0;
+      width: 260px;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar.open {
+      transform: translateX(0);
+    }
   }
 </style>

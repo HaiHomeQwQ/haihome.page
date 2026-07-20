@@ -24,4 +24,13 @@ import ProjectCard from '../components/ProjectCard.astro';
     box-shadow: var(--shadow);
     min-height: 550px; /* 匹配 ProjectCard 新高度 */
   }
+  @media (max-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+    }
+    .blank-card {
+      display: none;
+    }
+  }
 </style>
