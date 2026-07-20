@@ -1,18 +1,25 @@
 ---
-// TopCard.astro
+
 ---
 
 <div class="saying-card">
   <div class="date">
-    <span class="day">19</span>
+    <span class="day" id="current-day"></span>
     <span class="separator">/</span>
-    <span class="month">Jul.</span>
+    <span class="month" id="current-month"></span>
   </div>
   <div class="content">
     <p class="text">We do not remember days, we remember moments.</p>
     <p class="author">--Cesare Pavese</p>
   </div>
 </div>
+
+<script>
+  const now = new Date();
+  document.getElementById('current-day').textContent = now.getDate();
+  document.getElementById('current-month').textContent =
+    now.toLocaleString('en-US', { month: 'short' }) + '.';
+</script>
 
 <style>
   .saying-card {
