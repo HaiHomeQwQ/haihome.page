@@ -1,6 +1,11 @@
 <footer class="footer">
-  <span>Licensed under CC BY-SA 4.0</span>
-  <a href="https://icp.gov.moe/?keyword=20264560" target="_blank">萌ICP备20264560号</a>
+  <span>
+    Licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>
+  </span>
+  <div class="icp-links">
+    <a href="https://icp.gov.moe/?keyword=20264560" target="_blank">萌ICP备20264560号</a>
+    <a href="https://icp.hentioe.dev/sites/20263303" target="_blank">喵ICP备20263303号</a>
+  </div>
 </footer>
 
 <style>
@@ -22,10 +27,14 @@
   .footer a:hover {
     text-decoration: underline;
   }
+  .icp-links {
+    display: flex;
+    gap: 10px;
+  }
   @media (max-width: 768px) {
     .footer {
       flex-direction: column;
-      gap: 4px;
+      gap: 8px;
       text-align: center;
     }
   }
