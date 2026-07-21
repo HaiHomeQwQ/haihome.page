@@ -49,3 +49,13 @@ body {
   90% { opacity: 0.15; }
   100% { transform: translateY(100vh); opacity: 0; }
 }
+
+.blog-card, .post-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 24px;
+  box-shadow: var(--shadow);
+  box-sizing: border-box;
+  width: 100%;
+  contain: layout;
+}

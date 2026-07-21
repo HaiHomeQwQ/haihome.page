@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('blog')).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+---
+
+<BaseLayout title="博客 - HaiHome的角落">
+  <div class="blog-card">
+    <h1>博客</h1>
+    <ul class="blog-list">
+      {posts.map((post) => (
+        <li class="post-item">
+          <a href={`/blog/${post.id}/`}>
+            <span class="post-date">{post.data.pubDate.toLocaleDateString('zh-CN')}</span>
+            <span class="post-title">{post.data.title}</span>
+            <span class="arrow">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</BaseLayout>
+
+<style>
+  h1 { font-size: 2rem; color: var(--text-primary); margin-bottom: 8px; }
+  
+  .blog-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-height: 550px;
+  }
+  
+  .blog-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .post-item {
+    height: 48px;
+    background: var(--bg-page);
+    border-radius: calc(var(--radius) / 2);
+    display: flex;
+    align-items: center;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  
+  .post-item:hover {
+    background: var(--bg-card);
+    transform: translateX(4px);
+    box-shadow: var(--shadow);
+  }
+
+  .post-item a {
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+    width: 100%;
+    height: 100%;
+    text-decoration: none;
+    color: var(--text-primary);
+  }
+  
+  .post-date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    width: 100px;
+    flex-shrink: 0;
+  }
+
+  .post-title {
+    flex-grow: 1;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .arrow {
+    font-weight: bold;
+    color: var(--text-secondary);
+    margin-left: 12px;
+  }
+</style>

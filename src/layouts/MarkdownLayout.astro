@@ -4,8 +4,8 @@ import AboutCard from '../components/AboutCard.astro';
 const { frontmatter } = Astro.props;
 ---
 
-<BaseLayout title={frontmatter.title}>
-  <AboutCard>
+<BaseLayout title={`${frontmatter.title} - HaiHome的角落`}>
+  <AboutCard title={frontmatter.title}>
     <slot />
   </AboutCard>
 </BaseLayout>

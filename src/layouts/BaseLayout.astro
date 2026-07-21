@@ -20,6 +20,7 @@ import SpeedInsights from '@vercel/speed-insights/astro';
     <link rel="icon" href="/favicon.ico" />
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
+    <link rel="preload" href="/fonts/xiaolai/363165d89075367554ce6d4cef6a8c19.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
   </head>
   <body>
       <div class="background-animation"></div>
@@ -62,7 +63,10 @@ import SpeedInsights from '@vercel/speed-insights/astro';
   main {
     padding: 20px;
     width: 100%;
-    min-width: 0; /* 允许 flex/grid 子项缩小 */
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* 强制占满剩余空间 */
   }
   @media (max-width: 768px) {
     body {

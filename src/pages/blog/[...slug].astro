@@ -1,0 +1,56 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+}
+
+const post = Astro.props;
+const { Content } = await render(post);
+---
+
+<BaseLayout title={`${post.data.title} - HaiHome的角落`}>
+  <article class="post-card">
+    <header class="post-header">
+      <h1>{post.data.title}</h1>
+      <p class="post-date">{post.data.pubDate.toLocaleDateString('zh-CN')}</p>
+    </header>
+    <div class="post-content">
+      <Content />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .post-card {
+    padding: 32px;
+  }
+  
+  .post-header {
+    border-bottom: 1px solid var(--bg-page);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+  }
+
+  h1 { font-size: 2rem; color: var(--text-primary); margin: 0 0 8px 0; }
+  
+  .post-date {
+    color: var(--text-secondary);
+    font-size: 1rem;
+  }
+  
+  .post-content {
+    line-height: 1.6;
+    color: var(--text-primary);
+  }
+  
+  .post-content :global(h2) { font-size: 1.5rem; margin: 24px 0 12px; }
+  .post-content :global(p) { margin-bottom: 16px; }
+  .post-content :global(a) { color: #0070f3; text-decoration: none; }
+  .post-content :global(a:hover) { text-decoration: underline; }
+</style>
