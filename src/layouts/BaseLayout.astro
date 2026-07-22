@@ -10,6 +10,7 @@ import Sidebar from '../components/Sidebar.astro';
 import Footer from '../components/Footer.astro';
 import Analytics from '@vercel/analytics/astro';
 import SpeedInsights from '@vercel/speed-insights/astro';
+import { ClientRouter } from 'astro:transitions';
 ---
 
 <html lang="zh-CN">
@@ -21,11 +22,14 @@ import SpeedInsights from '@vercel/speed-insights/astro';
     <meta name="generator" content={Astro.generator} />
     <title>{title}</title>
     <link rel="preload" href="/fonts/xiaolai/363165d89075367554ce6d4cef6a8c19.woff2" as="font" type="font/woff2" crossorigin="anonymous" />
+    <ClientRouter />
   </head>
   <body>
-      <div class="background-animation"></div>
-      <Sidebar />
-      <main>
+      <div class="background-animation" transition:persist></div>
+      <div class="sidebar-shell" transition:persist>
+        <Sidebar />
+      </div>
+      <main transition:name="page-content">
         <slot />
         <Footer />
       </main>
@@ -44,8 +48,9 @@ import SpeedInsights from '@vercel/speed-insights/astro';
         flake.style.height = `${size}px`;
         flake.style.left = `${Math.random() * 100}%`;
         flake.style.top = `-50px`; // 确保初始位置在屏幕外
-        flake.style.animationDuration = `${Math.random() * 20 + 20}s`; // 20-40s
-        flake.style.animationDelay = `${Math.random() * 30}s`; // 初始分散延迟
+        const duration = Math.random() * 20 + 20;
+        flake.style.animationDuration = `${duration}s`; // 20-40s
+        flake.style.animationDelay = `${-Math.random() * duration}s`; // 从不同下落阶段开始
         container.appendChild(flake);
       }
     }
@@ -60,6 +65,9 @@ import SpeedInsights from '@vercel/speed-insights/astro';
     margin: 0;
     overflow-x: hidden; /* 防止侧边栏引起的水平溢出 */
   }
+  .sidebar-shell {
+    min-width: 0;
+  }
   main {
     padding: 20px;
     width: 100%;
@@ -67,6 +75,34 @@ import SpeedInsights from '@vercel/speed-insights/astro';
     display: flex;
     flex-direction: column;
     flex: 1; /* 强制占满剩余空间 */
+  }
+  :global(::view-transition-old(page-content)) {
+    animation: content-sink 300ms cubic-bezier(0.4, 0, 1, 1) both;
+  }
+  :global(::view-transition-new(page-content)) {
+    animation: content-rise 300ms cubic-bezier(0, 0, 0.2, 1) both;
+  }
+  :global(::view-transition-old(root)),
+  :global(::view-transition-new(root)) {
+    animation: none;
+  }
+  @keyframes content-sink {
+    to {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  @keyframes content-rise {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(::view-transition-old(page-content)),
+    :global(::view-transition-new(page-content)) {
+      animation-duration: 1ms;
+    }
   }
   @media (max-width: 768px) {
     body {

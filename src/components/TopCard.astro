@@ -15,10 +15,15 @@
 </div>
 
 <script>
-  const now = new Date();
-  document.getElementById('current-day').textContent = now.getDate();
-  document.getElementById('current-month').textContent =
-    now.toLocaleString('en-US', { month: 'short' }) + '.';
+  document.addEventListener('astro:page-load', () => {
+    const day = document.getElementById('current-day');
+    const month = document.getElementById('current-month');
+    if (!day || !month) return;
+
+    const now = new Date();
+    day.textContent = String(now.getDate());
+    month.textContent = `${now.toLocaleString('en-US', { month: 'short' })}.`;
+  });
 </script>
 
 <style>

@@ -45,8 +45,18 @@
     document.body.classList.toggle('no-scroll');
   }
 
+  function closeMenu() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('visible');
+    hamburger.classList.remove('active');
+    document.body.classList.remove('no-scroll');
+  }
+
   hamburger.addEventListener('click', toggleMenu);
   overlay.addEventListener('click', toggleMenu);
+  sidebar.querySelectorAll('.nav a').forEach((link) => {
+    link.addEventListener('click', closeMenu);
+  });
 </script>
 
 <style>
